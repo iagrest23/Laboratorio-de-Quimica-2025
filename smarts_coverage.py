@@ -1,3 +1,55 @@
+#!/usr/bin/env python
+"""
+smarts_coverage.py
+
+Descripción
+-----------
+Script para analizar la cobertura de patrones SMARTS en uno o varios
+archivos .csv que contienen listas de SMILES. El procedimiento consiste en:
+
+1. Cargar un archivo CSV con definiciones SMARTS 
+   (columnas obligatorias: "Description", "SMARTS").
+2. Leer todos los archivos .csv dentro de una carpeta especificada,
+   cada uno conteniendo una columna llamada 'smiles'.
+3. Para cada patrón SMARTS, contar cuántos SMILES de cada archivo presentan
+   coincidencia de subestructura (RDKit: Mol.HasSubstructMatch).
+4. Guardar una tabla resumen en formato CSV con la cantidad de matches por
+   archivo y por SMARTS.
+5. Generar una copia de respaldo automática del archivo SMARTS original
+   si aún no existe.
+
+Parámetros (CLI)
+----------------
+--folder : str
+    Carpeta que contiene los .csv con la columna 'smiles'.
+--smarts : str
+    Archivo CSV con definiciones SMARTS. Default: smarts.csv.
+--out : str
+    Nombre del CSV de salida con la cobertura de SMARTS. Default: smarts_coverage.csv.
+
+Uso
+---
+Ejemplo de ejecución:
+
+    python smarts_coverage.py \
+        --folder datasets_SMILES \
+        --smarts functional_groups.csv \
+        --out smarts_coverage_results.csv
+
+Requisitos
+----------
+- RDKit
+- pandas
+- glob, argparse
+- Archivos CSV con columnas válidas
+
+Notas
+-----
+Este script forma parte del pipeline de análisis químico-informático del 
+proyecto "Laboratorio de Química 2025". Permite cuantificar la prevalencia 
+de grupos funcionales definidos por SMARTS dentro de grandes colecciones 
+de SMILES.
+"""
 
 
 import os

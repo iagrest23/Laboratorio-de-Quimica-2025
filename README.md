@@ -10,7 +10,7 @@ Este repositorio contiene el código desarrollado en el marco de una tesina de g
 - Calcular descriptores geométricos basados en matrices de distancia.
 - Realizar clustering de conformeros para cada fórmula molecular usando DADApy.
 - Generar SMILES a partir de coordenadas 3D (OpenBabel + RDKit).
-- “Sanear” SMILES fallidos dentro de cada cluster.
+- Sanitizar SMILES fallidos dentro de cada cluster.
 - Escribir un nuevo dataset ANI y un archivo CSV con metadatos de cada conformero.
 
 Está pensado para usarse sobre datasets del tipo ANI (por ejemplo, ANI-2x) descargados de Zenodo y manejados a través de `torchani.datasets.ANIDataset`.

@@ -1,3 +1,55 @@
+#!/usr/bin/env python
+"""
+train_ani_model.py
+
+Descripción
+-----------
+Script para entrenar un potencial neuronal tipo ANI usando TorchANI.
+Incluye:
+1. Carga del dataset ANI-2x (formato HDF5, vía TorchANI ANIDataset).
+2. Creación de un dataset pre-batcheado (ANIBatchedDataset) para eficiencia
+   en memoria y velocidad de entrenamiento.
+3. Definición de un modelo ANI (simple_ani) con arquitectura para elementos
+   H, C, N, O, F, S y Cl, con repulsión activada.
+4. Configuración del optimizador AdamW y scheduler ReduceLROnPlateau.
+5. Bucle de entrenamiento por épocas, con cálculo de la pérdida MSE
+   normalizada por el número de átomos.
+6. Validación periódica del modelo calculando el RMSE en kcal/mol.
+7. Guardado de checkpoints: 
+   - latest_training_state.pt (estado del optimizador/scheduler/modelo)
+   - best_model_state.pt (mejor modelo según RMSE)
+8. Registro de métricas en TensorBoard: RMSE, best RMSE, learning rate y loss.
+
+Parámetros (internos)
+---------------------
+Este script no recibe argumentos CLI. Las rutas, batch_size, número de épocas,
+modelo ANI a entrenar y parámetros del optimizador están definidos dentro del
+archivo.
+
+Uso
+---
+Ejecutar directamente:
+
+    python train_ani_model.py
+
+El entrenamiento se reanudará automáticamente si existen los checkpoints:
+`latest_training_state.pt`.
+
+Requisitos
+----------
+- TorchANI
+- PyTorch
+- tqdm
+- TensorBoard
+- Dataset ANI-2x en formato HDF5
+
+Notas
+-----
+Este archivo contiene la versión base del entrenamiento utilizada en el proyecto
+"Laboratorio de Química 2025". Deriva del ejemplo oficial de TorchANI con
+adaptaciones específicas para ANI-2x y el flujo de trabajo del repositorio.
+"""
+
 import math
 from pathlib import Path
 

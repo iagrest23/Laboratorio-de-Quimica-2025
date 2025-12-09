@@ -1,3 +1,51 @@
+#!/usr/bin/env python
+"""
+ani_conformer_smiles_clustering.py
+
+Descripción
+-----------
+Script para:
+1. Cargar un dataset ANI (formato HDF5, usando TorchANI ANIDataset).
+2. Reagrupar conformeros por fórmula molecular.
+3. Calcular matrices de distancia y vectorizarlas para cada conformero.
+4. Hacer clustering de conformeros (por fórmula) usando DADApy (ADP).
+5. Generar SMILES a partir de (species, coordinates) usando smilestools.
+6. "Arreglar" SMILES fallidos dentro de cada cluster (reemplazando "SMILESN'T"
+   por un SMILES válido del mismo cluster, si existe).
+7. Escribir un nuevo HDF5 con los conformeros (agrupados por número de átomos).
+8. Guardar un CSV con metadatos de cada conformero:
+   índice global, fórmula molecular, ID de cluster, SMILES original y SMILES tras
+   la sanitización por cluster.
+
+Parámetros (CLI)
+----------------
+--patho : str
+    Ruta al archivo HDF5 de entrada con el dataset ANI (ANIDataset).
+--group : str
+    Identificador del grupo (ej. "004"). Se usa solo para nombrar el CSV de salida
+    (conformer_metadata_group_<group>.csv).
+--oname : str
+    Nombre del archivo HDF5 de salida (nuevo dataset ANI reescrito).
+
+Uso
+---
+Ejemplo de ejecución:
+
+    python ani_conformer_smiles_clustering.py \
+        --patho ani2x_group_004.h5 \
+        --group 004 \
+        --oname ani2x_SMILES_004.h5
+
+Requisitos
+----------
+- TorchANI (ANIDataset)
+- dadapy
+- smilestools (módulo que provee species_coordinates_to_smiles, etc.)
+- NumPy, csv, argparse
+"""
+
+
+
 import numpy as np
 from collections import defaultdict
 from smilestools import species_coordinates_to_smiles

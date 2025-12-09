@@ -1,3 +1,61 @@
+#!/usr/bin/env python
+"""
+smilestools.py
+
+Descripción
+-----------
+Módulo de utilidades para trabajar con geometrías atómicas (species, coordinates)
+y obtener:
+
+- Conversión de (species, coordinates) → RDKit Mol vía OpenBabel.
+- Generación de SMILES robustos a partir de coordenadas 3D:
+  - Filtro de contactos demasiado cercanos.
+  - Determinación de enlaces con rdDetermineBonds (Hückel).
+- Cálculo de fórmula molecular a partir de los números atómicos.
+- Cálculo de matrices de distancia y su vectorización (triángulo superior).
+- Reasignación de "outliers" de clustering (cluster_id = -1) al cluster más
+  cercano según centroides en el espacio de distancias.
+
+El módulo está pensado para ser importado por otros scripts (por ejemplo,
+ani_conformer_smiles_clustering.py), no para ejecutarse de forma aislada.
+
+Funciones principales
+---------------------
+species_coordinates_to_smiles(r, z, charge=0, useHueckel=True)
+    Devuelve un SMILES (o "SMILESN'T" si algo falla) a partir de species (Z)
+    y coordinates (xyz).
+
+species_to_formula(species_key)
+    Devuelve la fórmula molecular (string) a partir de la lista de números
+    atómicos.
+
+distance_matrix(r)
+    Matriz de distancias interatómicas (NxN) para un conjunto de coordenadas.
+
+vectorize_distance_matrix(D)
+    Vectoriza el triángulo superior de una matriz de distancias.
+
+reassign_clusters(X, clusters_id)
+    Reasigna los puntos con cluster_id = -1 al cluster más cercano usando
+    centroides en el espacio X.
+
+Uso típico (desde otro script)
+------------------------------
+    from smilestools import (
+        species_coordinates_to_smiles,
+        species_to_formula,
+        distance_matrix,
+        vectorize_distance_matrix,
+        reassign_clusters,
+    )
+
+    smiles = species_coordinates_to_smiles(coords, species)
+    formula = species_to_formula(species)
+    D = distance_matrix(coords)
+    v = vectorize_distance_matrix(D)
+"""
+
+
 import h5py
 from openbabel import openbabel as ob
 from openbabel import pybel

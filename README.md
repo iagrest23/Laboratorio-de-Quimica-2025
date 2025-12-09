@@ -74,9 +74,13 @@ Permite:
 # Estructura del repositorio
 
 ├── ani_conformer_smiles_clustering.py
+
 ├── smilestools.py
+
 ├── train_ani_model.py
+
 ├── smarts_coverage.py
+
 └── README.md
 
 
